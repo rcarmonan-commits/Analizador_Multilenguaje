@@ -1,0 +1,15 @@
+# Ignorar archivos temporales y generados
+.idea/
+*.class
+__pycache__/
+*.pyc
+node_modules/
+
+# Ignorar documentos de sustentacion
+*.doc
+*.docx
+*.pdf
+
+# Ignorar scripts auxiliares
+*.sh
+*.bat
