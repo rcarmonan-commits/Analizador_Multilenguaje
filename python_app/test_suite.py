@@ -9,6 +9,7 @@
 import unittest
 import os
 import sys
+from unittest.mock import patch
 
 # Aseguramos que el directorio actual esté en el path para importar los módulos
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -210,51 +211,98 @@ class TestAnalizadorArchivos(unittest.TestCase):
 
     def test_ejecutar_analizador_genera_archivo_salida(self):
         """ejecutar_analizador() debe generar el archivo 'resultados_python.txt'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            # Crear el archivo de entrada que el usuario "ingresaría"
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         self.assertTrue(os.path.exists("resultados_python.txt"),
                         "No se generó el archivo resultados_python.txt")
 
     def test_archivo_salida_contiene_reporte(self):
         """El archivo de salida debe contener 'REPORTE ESTADISTICO'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         with open("resultados_python.txt", "r") as f:
             contenido = f.read()
         self.assertIn("REPORTE ESTADISTICO", contenido)
 
     def test_archivo_salida_contiene_minimo(self):
         """El archivo de salida debe contener la línea 'Minimo:'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         with open("resultados_python.txt", "r") as f:
             contenido = f.read()
         self.assertIn("Minimo:", contenido)
 
     def test_archivo_salida_contiene_maximo(self):
         """El archivo de salida debe contener la línea 'Maximo:'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         with open("resultados_python.txt", "r") as f:
             contenido = f.read()
         self.assertIn("Maximo:", contenido)
 
     def test_archivo_salida_contiene_promedio(self):
         """El archivo de salida debe contener la línea 'Promedio:'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         with open("resultados_python.txt", "r") as f:
             contenido = f.read()
         self.assertIn("Promedio:", contenido)
 
     def test_archivo_salida_contiene_datos_ordenados(self):
         """El archivo de salida debe contener la sección 'DATOS ORDENADOS'."""
-        analizador_archivos.ejecutar_analizador()
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            analizador_archivos.ejecutar_analizador()
         with open("resultados_python.txt", "r") as f:
             contenido = f.read()
         self.assertIn("DATOS ORDENADOS", contenido)
 
     def test_ejecutar_analizador_no_lanza_excepcion(self):
         """ejecutar_analizador() no debe lanzar ninguna excepción."""
-        try:
-            analizador_archivos.ejecutar_analizador()
-        except Exception as e:
-            self.fail(f"ejecutar_analizador() lanzó una excepción: {e}")
+        with patch('builtins.input', return_value='numeros_entrada.txt'):
+            with open('numeros_entrada.txt', 'w') as f:
+                for n in [32, 45, 18, 50, 29]:
+                    f.write(f'{n}\n')
+            try:
+                analizador_archivos.ejecutar_analizador()
+            except Exception as e:
+                self.fail(f"ejecutar_analizador() lanzó una excepción: {e}")
+
+    def test_archivo_inexistente_muestra_error(self):
+        """Si el archivo no existe, debe retornar sin excepción (no crash)."""
+        with patch('builtins.input', return_value='archivo_que_no_existe_xyz.txt'):
+            try:
+                analizador_archivos.ejecutar_analizador()
+            except SystemExit:
+                pass
+            except Exception as e:
+                self.fail(f"Con archivo inexistente lanzó excepción inesperada: {e}")
+
+    def test_entrada_vacia_muestra_error(self):
+        """Si el usuario no escribe nada, debe retornar sin excepción (no crash)."""
+        with patch('builtins.input', return_value=''):
+            try:
+                analizador_archivos.ejecutar_analizador()
+            except Exception as e:
+                self.fail(f"Con entrada vacía lanzó excepción inesperada: {e}")
 
 
 # ============================================================

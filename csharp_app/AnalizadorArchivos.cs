@@ -37,16 +37,28 @@ namespace CSharpApp
             Console.WriteLine(" EJECUTANDO ACTIVIDAD PRÁCTICA: Analizador de Archivos (C#)");
             Console.WriteLine("=======================================================");
             Console.WriteLine("\n>>> Actividad: Modificar el Ejercicio 6 leyendo Objetos en un Arreglo...");
-            
-            string archivoEntrada = "numeros_entrada.txt";
+
+            // -------------------------------------------------------------------------
+            // SOLICITAR Y VALIDAR el archivo de entrada ingresado por el usuario
+            // -------------------------------------------------------------------------
+            Console.Write("\nIngrese el nombre (o ruta) del archivo de entrada: ");
+            string archivoEntrada = Console.ReadLine()?.Trim() ?? string.Empty;
             string archivoSalida = "resultados_csharp.txt";
+
+            if (string.IsNullOrEmpty(archivoEntrada))
+            {
+                Console.WriteLine("ERROR: No ingresó ningún nombre de archivo. Operación cancelada.");
+                return;
+            }
 
             if (!File.Exists(archivoEntrada))
             {
-                File.WriteAllLines(archivoEntrada, new string[] { "32", "45", "18", "50", "29" });
+                Console.WriteLine($"ERROR: El archivo '{archivoEntrada}' no existe o la ruta es incorrecta.");
+                Console.WriteLine("Verifique el nombre del archivo e intente de nuevo.");
+                return;
             }
 
-            Console.WriteLine($"Leyendo el archivo de disco: {archivoEntrada}");
+            Console.WriteLine($"Archivo encontrado. Leyendo: {archivoEntrada}");
 
             // =========================================================================
             // 2. MODIFICACION DEL EJERCICIO ORIGINAL: LEER Y GUARDAR COMO OBJETOS

@@ -24,16 +24,23 @@ def ejecutar_analizador():
     print(" EJECUTANDO ACTIVIDAD PRÁCTICA: Analizador de Archivos (PYTHON)")
     print("=======================================================")
     print("\n>>> Actividad: Modificar el Ejercicio 6 leyendo Objetos en un Arreglo...")
-    
-    archivo_entrada = "numeros_entrada.txt"
+
+    # -------------------------------------------------------------------------
+    # SOLICITAR Y VALIDAR el archivo de entrada ingresado por el usuario
+    # -------------------------------------------------------------------------
+    archivo_entrada = input("\nIngrese el nombre (o ruta) del archivo de entrada: ").strip()
     archivo_salida = "resultados_python.txt"
-    
+
+    if not archivo_entrada:
+        print("ERROR: No ingresó ningún nombre de archivo. Operación cancelada.")
+        return
+
     if not os.path.exists(archivo_entrada):
-        with open(archivo_entrada, "w") as f:
-            for n in [32, 45, 18, 50, 29]:
-                f.write(f"{n}\n")
-    
-    print(f"Leyendo el archivo de disco: {archivo_entrada}")
+        print(f"ERROR: El archivo '{archivo_entrada}' no existe o la ruta es incorrecta.")
+        print("Verifique el nombre del archivo e intente de nuevo.")
+        return
+
+    print(f"Archivo encontrado. Leyendo: {archivo_entrada}")
     
     # =========================================================================
     # 2. MODIFICACION DEL EJERCICIO ORIGINAL: LEER Y GUARDAR COMO OBJETOS
