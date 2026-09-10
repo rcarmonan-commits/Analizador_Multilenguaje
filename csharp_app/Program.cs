@@ -9,10 +9,10 @@ namespace CSharpApp
             Console.WriteLine("Iniciando Módulos del Protocolo Individual...\n");
 
             // Ejecuta demostración de Structs
-            RegistrosStructs.Ejecutar();
+            RegistrosStructs.ProbarStructs();
 
             // Ejecuta demostración de Clases
-            ObjetosClases.Ejecutar();
+            ObjetosClases.ProbarObjetos();
 
             // Ejecuta analizador integrador
             AnalizadorArchivos.EjecutarAnalizador();
